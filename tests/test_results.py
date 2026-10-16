@@ -82,7 +82,7 @@ def test_invalid_team_names_are_checked_home_then_away(line, expected):
     ("score", "quoted"),
     [
         ("2:1", "2:1"),
-        ("2 - 1", "2?-?1"),
+        ("2 -- 1", "2?--?1"),
         ("-1-2", "-1-2"),
         ("01-1", "01-1"),
         ("1-01", "1-01"),
