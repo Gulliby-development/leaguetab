@@ -37,7 +37,7 @@ def parse_results(display: str, text: str) -> list[Match]:
                     f"{display}:{line_number}: invalid team name {quote(team)}"
                 )
 
-        score_parts = score.split("-")
+        score_parts = [part.strip(" \t") for part in score.split("-")]
         if (
             len(score_parts) != 2
             or not is_whole_number(score_parts[0])
