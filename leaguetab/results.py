@@ -2,6 +2,8 @@ from .text import is_whole_number, quote
 
 Match = tuple[str, str, int, int]
 
+_SCORE_DASHES = str.maketrans({"\N{EN DASH}": "-", "\N{MINUS SIGN}": "-"})
+
 
 class ResultsError(ValueError):
     """A syntax or validation error in a results file."""
@@ -37,7 +39,7 @@ def parse_results(display: str, text: str) -> list[Match]:
                     f"{display}:{line_number}: invalid team name {quote(team)}"
                 )
 
-        score_parts = [part.strip(" \t") for part in score.split("-")]
+        score_parts = [part.strip(" \t") for part in score.translate(_SCORE_DASHES).split("-")]
         if (
             len(score_parts) != 2
             or not is_whole_number(score_parts[0])
