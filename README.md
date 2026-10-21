@@ -95,7 +95,7 @@ Eintracht - Celtic
 
 ## Results file
 
-Results are UTF-8 text, one match per line, in the form `HOME | AWAY | HG-AG`. Spaces and tabs around fields are ignored, and so are those around the dash of the score, so `2 - 1` is the score `2-1`. Blank lines and lines beginning with `#` are ignored. Team names are case-sensitive. A UTF-8 byte-order mark is allowed at the start of the file, and either LF or CRLF line endings can be used.
+Results are UTF-8 text, one match per line, in the form `HOME | AWAY | HG-AG`. Spaces and tabs around fields are ignored, and so are those around the dash of the score, so `2 - 1` is the score `2-1`. The dash may also be the en dash `–` (U+2013) or the minus sign `−` (U+2212), as copied from web tables; the hyphen stays the canonical form. Blank lines and lines beginning with `#` are ignored. Team names are case-sensitive. A UTF-8 byte-order mark is allowed at the start of the file, and either LF or CRLF line endings can be used.
 
 ## Ranking
 
