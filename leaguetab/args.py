@@ -7,12 +7,12 @@ from leaguetab.rules import parse_rules
 from leaguetab.text import is_whole_number, quote
 
 USAGE = (
-    "usage: leaguetab table [--win N] [--draw N] [--rules LIST] RESULTS\n"
+    "usage: leaguetab table [--win N] [--draw N] [--rules LIST] [--top N] RESULTS\n"
     "       leaguetab why [--win N] [--draw N] [--rules LIST] RESULTS TEAM TEAM\n"
     "       leaguetab todo [--legs N] RESULTS"
 )
 
-_OPTION_NAMES = ("win", "draw", "rules", "legs")
+_OPTION_NAMES = ("win", "draw", "rules", "legs", "top")
 _RULES_ERROR = (
     "invalid --rules {value} (expected a comma-separated list of gd, gf, "
     "wins, away and h2h without repeats)"
@@ -36,6 +36,7 @@ class Arguments:
     legs: int
     supplied: frozenset[str]
     help: bool = False
+    top: int = 0
 
     @property
     def options(self) -> dict[str, object]:
@@ -45,6 +46,7 @@ class Arguments:
             "draw": self.draw,
             "rules": self.rules,
             "legs": self.legs,
+            "top": self.top,
         }
 
 
@@ -55,7 +57,7 @@ def _option_error(name: str, value: str) -> UsageError:
 
 
 def _scan_options(argv: Sequence[str]) -> tuple[dict[str, str], set[str], list[str]]:
-    values = {"win": "3", "draw": "1", "rules": "gd,gf", "legs": "2"}
+    values = {"win": "3", "draw": "1", "rules": "gd,gf", "legs": "2", "top": "0"}
     supplied: set[str] = set()
     positional: list[str] = []
     index = 0
@@ -126,8 +128,17 @@ def parse_args(argv: Sequence[str]) -> Arguments:
         raise UsageError(f"invalid --legs {quote(legs_value)} (expected 1 or 2)")
     legs = int(legs_value)
 
+    top_value = values["top"]
+    if "top" in supplied and (not is_whole_number(top_value) or top_value == "0"):
+        raise UsageError(
+            f"invalid --top {quote(top_value)} (expected a whole number from 1 to 999999999)"
+        )
+    top = int(top_value)
+
     if command in ("table", "why") and "legs" in supplied:
         raise UsageError("--legs is only valid for todo")
+    if command in ("why", "todo") and "top" in supplied:
+        raise UsageError("--top is only valid for table")
     if command == "todo":
         for name in ("win", "draw", "rules"):
             if name in supplied:
@@ -164,4 +175,5 @@ def parse_args(argv: Sequence[str]) -> Arguments:
         rules=tuple(rules),
         legs=legs,
         supplied=frozenset(supplied),
+        top=top,
     )

@@ -92,7 +92,7 @@ def main(
     )
 
     if arguments.command == "table":
-        output_stream.write(table_report(stats, tie_groups) + "\n")
+        output_stream.write(table_report(stats, tie_groups, arguments.top) + "\n")
         return 0
 
     first_team, second_team = arguments.teams

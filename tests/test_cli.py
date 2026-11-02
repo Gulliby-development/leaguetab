@@ -131,7 +131,7 @@ def test_help_as_the_only_argument_has_exact_usage_and_status():
     assert (status, stdout, stderr) == (
         0,
         (
-            "usage: leaguetab table [--win N] [--draw N] [--rules LIST] RESULTS\n"
+            "usage: leaguetab table [--win N] [--draw N] [--rules LIST] [--top N] RESULTS\n"
             "       leaguetab why [--win N] [--draw N] [--rules LIST] RESULTS TEAM TEAM\n"
             "       leaguetab todo [--legs N] RESULTS\n"
         ),
