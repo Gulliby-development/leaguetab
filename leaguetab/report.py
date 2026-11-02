@@ -25,9 +25,9 @@ def _format_key(rule: str, value: Score) -> str:
 
 
 def table_report(
-    stats: Mapping[str, Mapping[str, int]], tie_groups: Sequence[Sequence[str]]
+    stats: Mapping[str, Mapping[str, int]], tie_groups: Sequence[Sequence[str]], top: int = 0
 ) -> str:
-    """Return the complete standings table, without a trailing newline."""
+    """Return the standings table, without a trailing newline; a positive top keeps its first rows."""
     rows: list[list[str]] = [["POS", "TEAM", "P", "W", "D", "L", "GF", "GA", "GD", "PTS"]]
     position = 1
     for group in tie_groups:
@@ -50,6 +50,8 @@ def table_report(
                 ]
             )
         position += len(group)
+    if top > 0:
+        rows = rows[: top + 1]
     alignment = ("left", "left", "right", "right", "right", "right", "right", "right", "right", "right")
     return render_table(rows, alignment)
 

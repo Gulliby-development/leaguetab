@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-USAGE = """usage: leaguetab table [--win N] [--draw N] [--rules LIST] RESULTS
+USAGE = """usage: leaguetab table [--win N] [--draw N] [--rules LIST] [--top N] RESULTS
        leaguetab why [--win N] [--draw N] [--rules LIST] RESULTS TEAM TEAM
        leaguetab todo [--legs N] RESULTS"""
 
@@ -35,6 +35,11 @@ HEAD_TO_HEAD_TABLE = """POS  TEAM       P  W  D  L  GF  GA  GD  PTS
 4    Dinamo     5  1  3  1   7   7   0    6
 5    Ajax       5  1  2  2   6   7  -1    5"""
 
+TOP_OUTPUT = """POS  TEAM       P  W  D  L  GF  GA  GD  PTS
+1    Celtic     4  2  1  1   8   7  +1    7
+2    Eintracht  5  2  1  2  10  10   0    7
+3    Benfica    5  2  1  2   7   7   0    7"""
+
 WHY_OUTPUT = """points: Benfica 7, Celtic 7
 h2h (3 teams): Benfica 3/0/4, Celtic 3/0/4
 h2h (2 teams): Benfica 3/+1/2, Celtic 0/-1/1
@@ -57,6 +62,7 @@ EXPECTED_TEXT_FENCES = [
     SEASON,
     DEFAULT_TABLE,
     HEAD_TO_HEAD_TABLE,
+    TOP_OUTPUT,
     WHY_OUTPUT,
     TODO_OUTPUT,
     "ruff check .\npytest -q",

@@ -25,7 +25,7 @@ python -m leaguetab
 The three commands are `table` for the standings, `why` for a comparison between two teams, and `todo` for missing fixtures. Use `-` instead of a path to read results from standard input. The help output is:
 
 ```text
-usage: leaguetab table [--win N] [--draw N] [--rules LIST] RESULTS
+usage: leaguetab table [--win N] [--draw N] [--rules LIST] [--top N] RESULTS
        leaguetab why [--win N] [--draw N] [--rules LIST] RESULTS TEAM TEAM
        leaguetab todo [--legs N] RESULTS
 ```
@@ -68,6 +68,15 @@ POS  TEAM       P  W  D  L  GF  GA  GD  PTS
 3    Celtic     4  2  1  1   8   7  +1    7
 4    Dinamo     5  1  3  1   7   7   0    6
 5    Ajax       5  1  2  2   6   7  -1    5
+```
+
+Use `--top N` to print only the first N rows of the table (N is a whole number from 1 to 999999999). The rows keep the positions of the full table, so a team tied at the cut still shows its shared position, and the columns are as wide as the printed rows need. An N larger than the number of teams prints every row. Only `table` accepts `--top`. `python -m leaguetab table --top 3 season.txt` prints:
+
+```text
+POS  TEAM       P  W  D  L  GF  GA  GD  PTS
+1    Celtic     4  2  1  1   8   7  +1    7
+2    Eintracht  5  2  1  2  10  10   0    7
+3    Benfica    5  2  1  2   7   7   0    7
 ```
 
 `python -m leaguetab why --rules h2h,gd,gf season.txt Benfica Celtic` explains the comparison:
